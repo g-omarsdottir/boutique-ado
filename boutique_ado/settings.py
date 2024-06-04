@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     # Apps
     'home',
     'products',
+    'bag',
     # Third-party apps
     'django_extensions',
 ]
