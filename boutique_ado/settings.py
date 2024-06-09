@@ -189,7 +189,6 @@ STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
 STRIPE_WH_SECRET = os.getenv("STRIPE_WH_SECRET", "")
 print(STRIPE_SECRET_KEY)
 print(STRIPE_PUBLIC_KEY)
-print(STRIPE_WH_SECRET)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
