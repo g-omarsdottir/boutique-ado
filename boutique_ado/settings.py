@@ -27,7 +27,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-nx(!(dxft40*7a48*k&-6!maq&4(t@6z6#p%fp6qq(8*%e0kg@"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = "DEVELOPMENT" in os.environ
+#DEBUG = "DEVELOPMENT" in os.environ
+DEBUG = True
 
 ALLOWED_HOSTS = [
     "8000-gomarsdotti-boutiqueado-30mi5yoqciv.ws.codeinstitute-ide.net",
@@ -184,7 +185,11 @@ STRIPE_CURRENCY = "usd"
 # From Guillermo Brachetta:
 STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY")
 STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
+
 STRIPE_WH_SECRET = os.getenv("STRIPE_WH_SECRET", "")
+print(STRIPE_SECRET_KEY)
+print(STRIPE_PUBLIC_KEY)
+print(STRIPE_WH_SECRET)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
