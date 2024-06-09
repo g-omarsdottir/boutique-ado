@@ -6,3 +6,4 @@ django-extensions==3.2.3
 pillow==10.3.0
 pytz==2024.1
 sqlparse==0.5.0
+stripe==9.10.0
