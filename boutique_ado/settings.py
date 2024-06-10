@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 import os
+
+if os.path.isfile("env.py"):
+    import env
 #from dotenv import load_dotenv
 
 #load_dotenv()
