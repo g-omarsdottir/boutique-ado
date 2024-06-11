@@ -1,13 +1,16 @@
 {% extends "account/base_entrance.html" %}
 {% load i18n %}
 {% load allauth account %}
+{% load crispy_forms_tags %}
 {% block head_title %}
     {% trans "Sign In" %}
 {% endblock head_title %}
-{% block content %}
-    {% element h1 %}
+{% block inner_content %}
+    <hr>
+    {% element h2 %}
         {% trans "Sign In" %}
     {% endelement %}
+    <hr>
     {% if not SOCIALACCOUNT_ONLY %}
         {% setvar link %}
             <a href="{{ signup_url }}">
@@ -23,6 +26,7 @@
             {% slot body %}
                 {% csrf_token %}
                 {% element fields form=form unlabeled=True %}
+                {{ form|crispy }}
                 {% endelement %}
                 {{ redirect_field }}
             {% endslot %}
@@ -45,4 +49,4 @@
     {% if SOCIALACCOUNT_ENABLED %}
         {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
     {% endif %}
-{% endblock content %}
+{% endblock inner_content %}
