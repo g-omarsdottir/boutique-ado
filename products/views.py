@@ -6,6 +6,16 @@ from django.db.models.functions import Lower
 from .models import Product, Category
 from .forms import ProductForm
 
+from django.views.generic import (
+    #CreateView,
+    #ListView,
+    #DetailView,
+    #DeleteView,
+    UpdateView,
+)
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.messages.views import SuccessMessageMixin # either this or messages
+from django.urls import reverse_lazy
 
 # Create your views here.
 def all_products(request):
@@ -96,26 +106,36 @@ def add_product(request):
     return render(request, template, context)
 
 
+class EditProductView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Product
+    form_class = ProductForm
+    template_name = 'products/edit_product.html'
+    pk_url_kwarg = 'product_id'
+    success_message = 'Successfully updated product!'
+    error_message = 'Failed to update product. Please ensure the form is valid.'
 
-def edit_product(request, product_id):
-    """ Edit a product in the store """
-    product = get_object_or_404(Product, pk=product_id)
-    if request.method == 'POST':
-        form = ProductForm(request.POST, request.FILES, instance=product)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Successfully updated product!')
-            return redirect(reverse('product_detail', args=[product.id]))
-        else:
-            messages.error(request, 'Failed to update product. Please ensure the form is valid.')
-    else:
-        form = ProductForm(instance=product)
-        messages.info(request, f'You are editing {product.name}')
+    def test_func(self):
+        """ Only allow the owner of the product to edit it """
+        """
+        Required for UserPassesTextMixin.
+        Returns True if user passes test: is staff or superuser.
+        Returns False if user is not is staff or superuser and throws 403 error.
+        """
+        return self.request.user.is_superuser or self.request.user.is_staff
 
-    template = 'products/edit_product.html'
-    context = {
-        'form': form,
-        'product': product,
-    }
+    def form_valid(self, form):
+        messages.success(self.request, self.success_message)
+        return super().form_valid(form)
 
-    return render(request, template, context)
+    def form_invalid(self, form):
+        messages.error(self.request, self.error_message)
+        return super().form_invalid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['product'] = self.object
+        messages.info(self.request, f'You are editing {self.object.name}')
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('product_detail', args=[self.object.id])
