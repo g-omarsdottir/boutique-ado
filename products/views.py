@@ -10,7 +10,7 @@ from django.views.generic import (
     #CreateView,
     #ListView,
     #DetailView,
-    #DeleteView,
+    DeleteView,
     UpdateView,
 )
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -91,9 +91,9 @@ def add_product(request):
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            product = form.save()
             messages.success(request, 'Successfully added product!')
-            return redirect(reverse('add_product'))
+            return redirect(reverse('product_detail', args=[product.id]))
         else:
             messages.error(request, 'Failed to add product. Please ensure the form is valid.')
     else:
@@ -139,3 +139,18 @@ class EditProductView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('product_detail', args=[self.object.id])
+
+
+class DeleteProductView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Product
+    pk_url_kwarg = 'product_id'
+    success_url = reverse_lazy('products')
+    success_message = 'Product deleted!'
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, self.success_message)
+        return super().delete(request, *args, **kwargs)
+
+    def test_func(self):
+        # Add your custom logic here to determine if the user should be allowed to delete the product
+        return self.request.user.is_superuser or self.request.user.is_staff
