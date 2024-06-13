@@ -1,19 +1,44 @@
-{% extends 'base.html' %}
-{% load i18n %}
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_header %}
+    <div class="container header-container">
+        <div class="row">
+            <div class="col"></div>
+        </div>
+    </div>
+{% endblock %}
 
 {% block content %}
-<div>
-    <form method="POST">
-        {% csrf_token %}
-        <p>Are you sure you want to delete the following post?</p>
-        <div>
-            <input type="submit" value="Confirm Deletion">
-            <a href="{% url 'product_detail' product.id %}">No, Return</a>
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <hr>
+                <h2 class="logo-font mb-4">Product Management</h2>
+                <h5 class="text-muted">Delete a Product</h5>
+                <hr>
+            </div>
         </div>
-    </form>
-    <div class="text-right">
-        <a class="btn btn-outline-black rounded-0" href="{% url 'product_detail' product.id %}">Cancel</a>
-    </div>
-</div>
 
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <form method="POST">
+                    {% csrf_token %}
+                    <p>Are you sure you want to delete the product?</p>
+                    <div>
+                        <input type="submit" value="Confirm Deletion">
+                        <a href="{% url 'product_detail' product.id %}">No, Return</a>
+                    </div>
+                </form>
+                    <div class="text-right">
+                        <a class="btn btn-outline-black rounded-0" href="{% url 'products' %}">Cancel</a>
+                        <button class="btn btn-black rounded-0" type="submit">Update Product</button>
+                    </div>
+                    <div class="text-right">
+                        <a class="btn btn-outline-black rounded-0" href="{% url 'product_detail' product.id %}">Cancel</a>
+                    </div>
+            </div>            
+        </div>
+    </div>
 {% endblock %}
