@@ -38,6 +38,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     "localhost",
     "8000-gomarsdotti-boutiqueado-30mi5yoqciv.ws.codeinstitute-ide.net",
+    "ecommerce-boutique-ado-4d033b69ab97.herokuapp.com",
     ".herokuapp.com",
 ]
 
