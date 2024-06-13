@@ -40,7 +40,6 @@ ALLOWED_HOSTS = [
     "8000-gomarsdotti-boutiqueado-30mi5yoqciv.ws.codeinstitute-ide.net",
     ".ecommerce-boutique-ado-4d033b69ab97.herokuapp.com",
     "ecommerce-boutique-ado-4d033b69ab97.herokuapp.com",
-    "https://ecommerce-boutique-ado-4d033b69ab97.herokuapp.com",
     ".herokuapp.com",
 ]
 
