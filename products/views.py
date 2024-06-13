@@ -148,6 +148,7 @@ class EditProductView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class DeleteProductView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Product
+    template_name = 'products/delete_product.html'
     pk_url_kwarg = 'product_id'
     success_url = reverse_lazy('products')
     success_message = 'Product deleted!'
@@ -159,3 +160,6 @@ class DeleteProductView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         # Add your custom logic here to determine if the user should be allowed to delete the product
         return self.request.user.is_superuser or self.request.user.is_staff
+
+    def get_success_url(self):
+        return reverse_lazy('product')

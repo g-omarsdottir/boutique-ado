@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 import os
+import dj_database_url
+import cloudinary
 
 if os.path.isfile("env.py"):
     import env
@@ -27,7 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-nx(!(dxft40*7a48*k&-6!maq&4(t@6z6#p%fp6qq(8*%e0kg@"
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = "DEVELOPMENT" in os.environ
@@ -60,6 +62,8 @@ INSTALLED_APPS = [
     # Third-party apps
     "django_extensions",
     "crispy_forms",
+    "cloudinary",
+    "cloudinary_storage",
 ]
 
 MIDDLEWARE = [
@@ -137,6 +141,9 @@ DATABASES = {
     }
 }
 
+#DATABASES = {
+#    "default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
+#}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -179,6 +186,10 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+# Cloudinary settings
+#DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+CLOUDINARY_URL = os.environ.get("CLOUDINARY_URL")
 
 # Stripe
 FREE_DELIVERY_THRESHOLD = 50
