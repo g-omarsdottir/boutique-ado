@@ -32,8 +32,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = "DEVELOPMENT" in os.environ
-DEBUG = True
+DEBUG = "DEVELOPMENT" in os.environ
+#DEBUG = os.getenv("STRIPE_PUBLIC_KEY", "")
+#DEBUG = False
 
 ALLOWED_HOSTS = [
     "localhost",
